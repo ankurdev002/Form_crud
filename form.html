@@ -1,0 +1,314 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="form.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500&display=swap" rel="stylesheet"> 
+        <title>Form</title>
+    </head>
+    <body>
+        <div class="main" >
+            <h1>Form</h1>
+    <form id="submitForm" >
+        
+        
+        <div>
+        <label class="label" value="fname" for="fname">First Name</label>
+        <input class="formValid"   type="text" id="fname"
+          name="fname" placeholder="Enter First Name..." title="Alphabets Only..."/>
+
+        <p class="errormsg" id="fnameerrormsg">Please Enter First Name...</p>
+    </div>
+
+        <div>
+        <label class="label" value="lname" for="lname">Last Name</label>
+        <input class="formValid"  type="text" id="lname" 
+         name="lname" placeholder="Enter Last Name..." title="Alphabets Only..."/>
+
+        <p class="errormsg" id="lnameerrormsg">Please Enter Last Name...</p>   
+    </div>
+
+        <div>
+        <label class="label" value="pwd" for="password">Password</label>
+        <input class="formValid"  type="password" id="password" name="password" placeholder="Enter Password..." />
+        <p class="errormsg" id="passerrormsg">Please Enter Password...</p>
+        </div>
+
+        <div>
+            <label class="label" value="dob" for="dob">D.O.B</label>
+            <input class="formValid" type="date" id="dob" name="dob" placeholder="Please Enter D.O.B..."/>
+            <p class="errormsg" id="doberrormsg">Please Enter D.O.B...</p>
+        </div>
+
+
+        <div>
+        <label class="label" value="email" for="email">Email</label>
+        <input class="formValid" type="email" name="email" id="email" 
+        onchange="inputchecker()" placeholder="Enter Your Email..."  />
+        <p class="errormsg" id="emailerrormsg">Please Enter Valid Email...</p>
+        </div>
+
+        <div>
+            <label class="label" value="mob" for="mob">Mobile No.</label>
+            <input class="formValid" type="tel" name="mob" id="mob" placeholder="Enter Your Mobile Number" 
+            pattern="[0-9]{10}" title="Enter 10 Digit Number"/>
+
+            <p class="errormsg" id="moberrormsg">Please Enter Mobile No...</p>
+            </div>
+
+        <div>
+        <legend class="lab" value="gender">Gender</legend>       
+        <fieldset>
+
+        <input class="genderOption"  type="radio" id="gender" name="gender" value="male" checked/>
+        <label  value="male" for="male">Male</label>
+
+        <input class="genderOption"  type="radio" id="gender" name="gender" value="female"/>
+        <label  value="female" for="female">Female</label>
+
+        <input class="genderOption"  type="radio" id="gender" name="gender" value="other" />
+        <label  value="other" for="other">Other</label>
+
+        </fieldset>
+        </div>
+
+
+
+
+
+
+        <div class="btn full">
+            <button type="reset" onclick="deleteItems()" value="Reset">Reset</button>
+            <button type="submit"  value="Submit">Submit</button>
+
+            </div>
+
+            <input type="text" id="keydataid"  />
+
+    </form>
+    
+</div>
+
+    <table class="list" id="datalist">
+       <thead>
+           <tr>
+               <th>First Name</th>
+               <th>Last Name</th>
+               <th>Password</th>
+               <th>D.O.B</th>
+               <th>Email</th>
+               <th>Mobile</th>
+               <th>Gender</th>
+               <th>CRUD OP</th>
+           </tr>
+
+       </thead>
+       <tbody>
+
+       </tbody>
+   </table>
+
+
+
+<script>
+
+
+
+    let localstorage_value=document.getElementById("localstorage_value")
+    let formValid = document.getElementsByClassName("formValid")
+    let selectedRow = null
+    
+
+
+    submitForm.addEventListener("submit",(e)=>{
+        e.preventDefault();
+
+        let hold = document.querySelectorAll("input");
+        let labelvalue = document.getElementsByClassName('label');
+        let keyid = (Math.random() + 1).toString(36).substring(7);
+        let dataValue={id:keyid}
+
+    //getting data of input field through label 
+        for (let i = 0; i <  labelvalue.length; i++) {
+            let labelhold=labelvalue[i].nextElementSibling.id
+            dataValue[labelhold]=hold[i].value.trim()
+            
+        }
+        
+        
+        
+    //gender value
+        let genderOption=document.getElementsByClassName("genderOption")
+        for(let i=0;i<genderOption.length;i++){
+
+            if(genderOption[i].checked){
+
+                dataValue["gender"]=genderOption[i].value
+            }
+            
+        }
+        
+        //operations
+
+        //to display error msg when input field are empty
+
+    if(dataValue.fname == ""
+          || dataValue.lname == ""
+          || dataValue.gender=="" 
+          || dataValue.mob == ""
+          || dataValue.email == ""
+          || dataValue.dob == ""
+          || dataValue.password == ""){
+        for(let i=0;i<formValid.length;i++){
+            if(formValid[i].value == ""){
+                formValid[i].nextElementSibling.innerHtml=formValid[i].value;
+                formValid[i].nextElementSibling.style.display="block";
+            }
+            else{
+                formValid[i].nextElementSibling.style.display="none";
+            }
+        }
+        }
+    else{
+        let keydataItem=document.getElementById("keydataid");
+        console.log(keydataItem.value)
+
+        if(keydataItem.value!=""){
+            keyid=keydataItem.value;
+            dataValue.id=keyid;
+            localStorage.removeItem(keyid);
+            localStorage.setItem(keyid,JSON.stringify(dataValue));
+            keydataItem.value="";
+        }
+        else{
+            localStorage.setItem(keyid,JSON.stringify(dataValue));
+        }
+            //sending data with validation in local storage
+            
+            console.log(keyid,keydataItem.value)
+            //getting data from localstorage
+            keyValue=JSON.parse(window.localStorage.getItem(keyid));
+            
+
+            //insert of data in table    
+   
+                let table=document.getElementById("datalist").getElementsByTagName('tbody')[0];
+                let newRow=table.insertRow(table.length);
+                cell1=newRow.insertCell(0);
+                cell1.innerHTML=keyValue.fname;
+                cell2=newRow.insertCell(1);
+                cell2.innerHTML=keyValue.lname;
+                cell3=newRow.insertCell(2);
+                cell3.innerHTML=keyValue.password;
+                cell4=newRow.insertCell(3);
+                cell4.innerHTML=keyValue.dob;
+                cell5=newRow.insertCell(4);
+                cell5.innerHTML=keyValue.email;
+                cell6=newRow.insertCell(5);
+                cell6.innerHTML=keyValue.mob;
+                cell7=newRow.insertCell(6);
+                cell7.innerHTML=keyValue.gender;
+                cell8=newRow.insertCell(7);
+                cell8.innerHTML=`<a class="btna" id="${keyValue.id}" onClick="onEdit(this)">Edit</a><a class="btnb" onClick="onDelete(this)" 
+                id="${keyValue.id}">Delete</a>`;
+
+
+        //hide error msg 
+        for(let i=0;i<formValid.length;i++){
+            formValid[i].nextElementSibling.style.display="none";
+        }  
+        
+        //to reset the form fields just unhide the below line....
+        // submitForm.reset();
+
+        }    
+    })
+
+
+
+    //for deleting the particular row in table 
+function onDelete(td){
+    if(confirm('are you sure you want to delete the record')){
+        row=td.parentElement.parentElement;
+        //accessing the table data by id
+        document.getElementById("datalist").deleteRow(row.rowIndex);
+        localStorage.removeItem(td.id); 
+    
+}
+}
+
+//edit values
+function onEdit(td){
+    document.getElementById("keydataid").value=td.id;
+    console.log(td.id);
+    selectedRow = td.parentElement.parentElement;
+
+    for(let i=0; i<selectedRow.cells.length-2;i++){
+        formValid[i].value=selectedRow.cells[i].innerHTML;
+     }
+
+
+    if(selectedRow.cells[6].innerHTML=="male" 
+        || selectedRow.cells[6].innerHTML=="female" 
+        || selectedRow.cells[6].innerHTML=="other"){
+            let genderopt=document.getElementsByClassName("genderOption");
+            
+
+            for(let j=0;j<genderopt.length;j++){
+                
+                if(genderopt[j].value==selectedRow.cells[6].innerHTML){
+                    genderopt[j].checked=true;
+                }
+            }
+
+        }
+
+}
+
+
+
+
+//email checker for validation using regex
+
+function inputchecker(){
+    let emailchecker=/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+    let emailvalue=document.getElementById("email");
+
+    if(!emailchecker.test(emailvalue.value)){
+        emailvalue.nextElementSibling.style.display="block"
+        emailvalue.focus;
+        return false;
+    }
+    else{
+        emailvalue.nextElementSibling.style.display="none"
+    }
+   
+}
+
+
+        
+//delete function used in reset button to delete localstorage DB and all fields data
+
+function deleteItems() {   
+
+    //hide error msg onclick on reset
+    for(let i=0;i<formValid.length;i++){
+            formValid[i].nextElementSibling.style.display="none";
+        }
+
+        let table=document.getElementById("datalist");
+        for(let i = 1;i<table.rows.length;){
+            table.deleteRow(i);
+        }
+
+    //clear all records of data in local storage onclick on reset
+     localStorage.clear();  
+}
+
+
+
+    
+</script>
+    </body>
+
+</html>

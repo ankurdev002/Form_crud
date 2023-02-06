@@ -1,0 +1,187 @@
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background:url(back.jpg);
+    background-size: cover;
+    color: #333;
+    font: 100%;
+}
+
+.main{
+  background: whitesmoke;
+    margin: 20px auto;
+    padding: 4% 0;
+    width: 80%;
+    border-radius: 20px ;
+    max-width: 60%;
+}
+
+.main h1{
+  padding: 20px;
+  text-align: center;
+}
+h1:after{
+  content:"";
+  display:block;
+  width: 90px;
+  border-bottom: 2px solid salmon;
+  margin: 5px auto ;
+}
+
+
+
+form{
+    box-shadow: 0 0 50px whitesmoke;
+    box-sizing: border-box;
+    padding: 60px;
+    border-radius: 20px;
+    background-color: whitesmoke;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.full{
+    grid-column: span 2;
+}
+
+
+button,
+fieldset,
+input,
+legend {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+input,
+select,
+textarea {
+  border: 2px solid lightblue;
+  background-color: white;
+  border-radius: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+  font: 16px 'Montserrat', sans-serif;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 10px;
+}
+
+
+  
+input[type="radio"] {
+  height: 20px;
+  width: 20px;
+  vertical-align: middle;
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+input[type="radio"]:checked {
+    background-image: radial-gradient(
+      hsl(213, 73%, 50%) 40%,
+      transparent calc(40% + 1px)
+    );
+  }
+
+  
+.label {
+    display: inline-block;
+    font: 16px;
+    margin-top: 10px;
+  }
+
+  .btn{
+    padding-top: 20px;
+  }
+
+  .btn button{
+    padding: 10px 30px;
+    color: white;
+    text-transform: uppercase;
+    background-color: red;
+    border-radius: 5px;
+    letter-spacing: 2px;
+    transition: .5s ease;
+  }
+
+  button:hover{
+    cursor: pointer;
+    transform: scale(0.95);
+    background-color: green;
+  }
+
+:focus::placeholder{
+    color: transparent;
+}
+
+.errormsg{
+	color: red;
+    font-size: 10px;
+	display: none;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: white;
+
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+a{
+  border: 1px solid lightseagreen;
+  background-color: paleturquoise;
+  margin: 5px;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  transition: 1s ease;
+}
+
+.btna{
+  background-color: lightseagreen;
+  border: 2px solid #333;
+}
+
+.btnb{
+  background-color: red;
+  border: 2px solid #333;
+}
+
+a:hover{
+  cursor: pointer;
+}
+
